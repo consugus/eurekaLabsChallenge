@@ -4,6 +4,7 @@
   "description": "Challenge to see if i am accepted at EurekaLabs",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gustavo Jorge Rios",
