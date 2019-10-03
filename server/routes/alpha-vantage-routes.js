@@ -7,8 +7,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get( '/cotization', (req, res) => {
 
-
-
     const url = "https://www.alphavantage.co/query?";
     let myFn = "TIME_SERIES_DAILY";
     let sym = req.body.company;
@@ -21,47 +19,17 @@ app.get( '/cotization', (req, res) => {
             message:`El símbolo ${sym} no es válido`
         });
     } else {
-        let today = getToday().toString();
-        let prev = getPrevious().toString();
-
         let todayValue;
         let previousValue;
         let dif;
+        let output;
 
-        let salida = {
-            "symbol": sym,
-            "value": todayValue || 0,
-            "previous": previousValue || 0,
-            "change_percent": 0,
-            "change_value": 0,
-            "color_code": "green",
-        };
-
-
-        request.get(query, (err, resp, data) => {
-
-            // #region comentada
-            // if ( err ) return res.status(400).json({
-                //     ok: false,
-                //     message: "No se encontró valor para las acciones de la empresa solicitada"
-            // });
-            // return res.status(200).json({
-                //     ok: true,
-                //     data
-                // });
-
-                // console.log("value: ", (JSON.parse(data)["Time Series (Daily)"][today]["4. close"]) );
-                // console.log("previous: ", JSON.parse(data)["Time Series (Daily)"][prev]["4. close"]);
-
-            // #endregion
-
-            if ( err ) console.log(err);
-
-            todayValue = ( JSON.parse(resp.body)["Time Series (Daily)"][today]["4. close"] );
-            previousValue = ( JSON.parse(resp.body)["Time Series (Daily)"][prev]["4. close"] );
+        request.get(query, (err, resp, body) => {
+            todayValue = Number( JSON.parse(body)["Time Series (Daily)"][getToday().toString()]["4. close"] ).toFixed(2);
+            previousValue = Number( JSON.parse(body)["Time Series (Daily)"][getPrevious().toString()]["4. close"] ).toFixed(2);
             dif = todayValue-previousValue; // dif = previousValue-todayValue;
 
-            let out = {
+            salida = {
                 "symbol": sym,
                 "value": todayValue,
                 "previous": previousValue,
@@ -69,17 +37,20 @@ app.get( '/cotization', (req, res) => {
                 "change_value": (dif).toFixed(2),
                 "color_code": ( (dif) >= 0 ? "green" : "red" ),
             };
-            console.log(out);
-            // resp.send(out);
+
+            output = {
+                ok: true,
+                message: salida
+            };
+            console.log(output);
         });
-        res.status(200).send(salida);
+
+        setTimeout( ( ) => {
+            res.status(200).send(output);
+        }, 2500);
+
     }
 });
-
-
-
-
-
 
 
 function getToday(){
@@ -92,23 +63,15 @@ function getPrevious(){
     let previous = new Date( new Date().getTime() - (1*1000*60*60*24) ) ;
     let fDate = parseDate(previous);
     return `${fDate.year}-${fDate.month}-${fDate.day}`;
-
 }
 
 function parseDate(date){
-
     return {
         year: date.getFullYear(),
         month: ( (date.getMonth().toString().length > 9) ? `0${date.getMonth()+1}` : date.getMonth()+1 ),
         day: ( (date.getDate().toString().length === 1) ? `0${date.getDay()-1}` : date.getDay()-1 )
-
     };
 }
-
-
-
-
-
 
 
 module.exports = app;
