@@ -3,16 +3,15 @@ const colors = require('colors');
 const express = require('express');
 const app = express();
 
-app.get( '/', (req, res) => {
-    let salida = {
-        name: "Gustavo Jorge",
-        age: 49,
-        url: req.url
-    };
+//========================================
+//                Routes
+//========================================
+app.use( require('./routes/user-routes') );
+app.use( require('./routes/alpha-vantage-routes') );
 
-    res.send(salida);
 
-});
+
+
 
 
 
