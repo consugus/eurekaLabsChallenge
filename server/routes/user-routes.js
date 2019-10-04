@@ -4,6 +4,7 @@ const { users } = require('../config/config');
 const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
 const _ = require('underscore');
+const { tokenVerify } = require('../middlewares/authentication');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-
 // =======================================
 //       Devolver todos los usuarios
 // =======================================
-app.get( '/usuario', (req, res) => {
+app.get( '/usuario', tokenVerify, (req, res) => {
 
     let tmp = [];
     for( let i = 0 ; i < users.length ; i++ ){
@@ -35,7 +36,7 @@ app.get( '/usuario', (req, res) => {
 // =======================================
 //    Devolver un usuario, dado un ID
 // =======================================
-app.get('/usuario/:id', (req, res) => {
+app.get('/usuario/:id', tokenVerify, (req, res) => {
 
     let id = req.params.id;
 
@@ -63,7 +64,7 @@ app.get('/usuario/:id', (req, res) => {
 // =======================================
 //       Agregar un usuario a la BD
 // =======================================
-app.post( '/usuario', (req, res) => {
+app.post( '/usuario', tokenVerify, (req, res) => {
     let body = req.body;
     let passwordHashed = bcrypt.hashSync(body.password, 10);
     let uniqueEmail = true;
@@ -110,7 +111,7 @@ app.post( '/usuario', (req, res) => {
 // =======================================
 // Actualizar la información de un Usuario
 // =======================================
-app.put( '/usuario/:id', (req, res) => {
+app.put( '/usuario/:id', tokenVerify, (req, res) => {
     let body = req.body;
     let id = req.params.id;
     let validUser = false;
@@ -156,7 +157,7 @@ app.put( '/usuario/:id', (req, res) => {
 // =======================================
 //    Eliminado de un usuario
 // =======================================
-app.delete( '/usuario/:id', (req, res) => {
+app.delete( '/usuario/:id', tokenVerify, (req, res) => {
 
     let id = req.params.id;
     let validUser = false;

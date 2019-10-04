@@ -39,7 +39,6 @@ app.post('/login', (req, res) => {
             });
         }
 
-        let secret = "EurekaLabsChallenge"
         let token = jwt.sign(_.pick(user, "id", "name", "email"), process.env.SECRET, {expiresIn: process.env.TOKEN_EXPIRATION_TIME}); // expires in 24 hs
         res.status(200).json({
             ok: true,

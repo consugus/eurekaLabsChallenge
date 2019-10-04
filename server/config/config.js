@@ -9,8 +9,9 @@ process.env.PORT = process.env.PORT || 3000;
 //========================================
 //                JsonWebToken
 //========================================
-process.env.TOKEN_EXPIRATION_TIME = 60*60*24; // Expires in 24 hs
+process.env.TOKEN_EXPIRATION_TIME = '30d'; // Expires in 30 days
 process.env.SECRET = process.env.SECRET || "EurekaLabsChallenge";
+
 
 //========================================
 //    User Data (for testing pourpuse)
