@@ -37,19 +37,26 @@ app.get( '/usuario', (req, res) => {
 // =======================================
 app.get('/usuario/:id', (req, res) => {
 
-    let id = req.params.id || "No id";
+    let id = req.params.id;
 
     let user = new User();
     for (let i = 0 ; i < users.length ; i++){
         if( users[i].id === id ){
             user = _.pick(users[i], "id", "name", "email");
+
+            res.json({
+                message: "get usuarios by id",
+                user
+            });
+
+        } else {
+            res.json({
+                message: "get usuarios by id",
+                error: "No se ingresó un id válido"
+            });
         }
     }
 
-    res.json({
-        message: "get usuarios by id",
-        user
-    });
 });
 
 
@@ -58,20 +65,45 @@ app.get('/usuario/:id', (req, res) => {
 // =======================================
 app.post( '/usuario', (req, res) => {
     let body = req.body;
-    passwordHashed = bcrypt.hashSync(body.password, 10);
+    let passwordHashed = bcrypt.hashSync(body.password, 10);
+    let uniqueEmail = true;
 
-    let user = new User({
-        name: body.name,
-        email: body.email,
-        password: passwordHashed
-    });
+    if( body.name && body.email && body.password ){
 
-    users.push(user);
+        for (let i = 0 ; i < users.length ; i++){
+            if( users[i].email === body.email ){
+                uniqueEmail = false;
+            }
+        }
 
-    res.json({
-        message: "post usuarios",
-        user: _.pick(user, "id", "name", "email")
-    });
+        if (uniqueEmail) {
+
+            let user = new User({
+                name: body.name,
+                email: body.email,
+                password: passwordHashed
+            });
+
+            users.push(user);
+            res.json({
+                message: "post usuarios",
+                user: _.pick(user, "id", "name", "email")
+            });
+
+        } else {
+            res.json({
+                message: "get usuarios by id",
+                error: `Ya existe el email ${body.email} cargado`
+            });
+        }
+
+    } else {
+        res.json({
+            message: "get usuarios by id",
+            error: "El nombre, email y el password son obligatorios"
+        });
+    }
+
 });
 
 
@@ -81,24 +113,48 @@ app.post( '/usuario', (req, res) => {
 app.put( '/usuario/:id', (req, res) => {
     let body = req.body;
     let id = req.params.id;
-    passwordHashed = bcrypt.hashSync(body.password, 10);
+    let validUser = false;
 
-    let user = new User();
+    if( body.name && body.email && body.password ){
 
-    for( let i = 0 ; i < users.length ; i++ ){
-        if( users[i].id === id ){
-            users[i].name = body.name;
-            users[i].email = body.email;
-            users[i].password = passwordHashed;
-            user = users[i];
-            console.log(`usuario actualizado, ${JSON.stringify(user)}`);
+        passwordHashed = bcrypt.hashSync(body.password, 10);
+        let user = new User();
+
+        for( let i = 0 ; i < users.length ; i++ ){
+            if( users[i].id === id ){
+
+                users[i].name = body.name;
+                users[i].email = body.email;
+                users[i].password = passwordHashed;
+                user = users[i];
+                console.log(`usuario actualizado, ${JSON.stringify(user)}`);
+
+                res.json({
+                    message: "Actualizar usuario",
+                    user: _.pick(user, "id", "name", "email")
+                });
+                validUser = true;
+            }
         }
+
+        if(!validUser){
+            res.json({
+                message: "Actualizar usuario",
+                error: `El id ${id} no corresponde a un usuario válido`
+            });
+        }
+
+
+    } else {
+        res.json({
+            message: "Actualizar usuario",
+            error: "El nombre, email y el password son obligatorios"
+        });
     }
 
-    res.json({
-        message: "put usuarios",
-        user: _.pick(user, "id", "name", "email")
-    });
+
+
+
 });
 
 
@@ -107,7 +163,8 @@ app.put( '/usuario/:id', (req, res) => {
 // =======================================
 app.delete( '/usuario/:id', (req, res) => {
 
-    let id = req.params.id || "No id";
+    let id = req.params.id;
+    let validUser = false;
 
     let user = new User();
     for(let i = 0 ; i < users.length ; i++){
@@ -115,13 +172,23 @@ app.delete( '/usuario/:id', (req, res) => {
             user = users[i];
             users.splice(i, 1);
             console.log(`usuario id: ${id} eliminado`);
+            validUser = true;
         }
     }
 
-    res.json({
-        message: "delete usuarios",
-        user: _.pick(user, "id", "name", "email")
-    });
+    if(validUser){
+        res.json({
+            message: "delete usuarios",
+            user: _.pick(user, "id", "name", "email")
+        });
+    } else {
+        res.json({
+            message: "Actualizar usuario",
+            error: `El id ${id} no corresponde a un usuario válido`
+        });
+    }
+
+
 });
 
 
