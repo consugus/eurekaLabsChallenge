@@ -7,7 +7,13 @@ process.env.PORT = process.env.PORT || 3000;
 
 
 //========================================
-//             User Data
+//                JsonWebToken
+//========================================
+process.env.TOKEN_EXPIRATION_TIME = 60*60*24; // Expires in 24 hs
+process.env.SECRET = process.env.SECRET || "EurekaLabsChallenge";
+
+//========================================
+//    User Data (for testing pourpuse)
 //========================================
 let user = {
     id: "007",

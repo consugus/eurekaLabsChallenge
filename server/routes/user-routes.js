@@ -144,17 +144,12 @@ app.put( '/usuario/:id', (req, res) => {
             });
         }
 
-
     } else {
         res.json({
             message: "Actualizar usuario",
             error: "El nombre, email y el password son obligatorios"
         });
     }
-
-
-
-
 });
 
 
@@ -187,8 +182,6 @@ app.delete( '/usuario/:id', (req, res) => {
             error: `El id ${id} no corresponde a un usuario válido`
         });
     }
-
-
 });
 
 

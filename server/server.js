@@ -6,8 +6,7 @@ const app = express();
 //========================================
 //                Routes
 //========================================
-app.use( require('./routes/user-routes') );
-app.use( require('./routes/alpha-vantage-routes') );
+app.use( require('./routes/routes') );
 
 
 
