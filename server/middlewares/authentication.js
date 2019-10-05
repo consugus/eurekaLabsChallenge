@@ -1,16 +1,11 @@
-
 const jwt = require('jsonwebtoken');
 
-// =======================================
-//            Token Velification
-// =======================================
+// ================================================
+//              Token Velification
+// ================================================
 
 let tokenVerify = (req, res, next) =>{
     let token = req.get('token');
-
-    // res.json({
-    //     token
-    // });
 
     jwt.verify( token, process.env.SECRET, (err, decoded) => {
         if( err){

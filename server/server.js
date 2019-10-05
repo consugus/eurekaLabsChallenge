@@ -1,11 +1,25 @@
 require('./config/config');
 const colors = require('colors');
 const express = require('express');
+const fs = require('fs');
+const morgan = require('morgan');
+const path = require('path');
+var rfs = require('rotating-file-stream');
 const app = express();
 
-//========================================
-//                Routes
-//========================================
+let logDirectory = path.join(__dirname, 'log');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+// Create a rotating write stream
+let accessLogStream = rfs( 'invest-api.log', { interval: '1d', path: logDirectory });
+
+// Setup a logger
+app.use( morgan('combined', {stream: accessLogStream}) );
+
+// ================================================
+//                    Routes
+// ================================================
+
 app.use( require('./routes/routes') );
 
 

@@ -1,21 +1,21 @@
 const bcrypt = require('bcrypt');
 
-//========================================
-//                Port
-//========================================
+// ================================================
+//                    Port
+// ================================================
 process.env.PORT = process.env.PORT || 3000;
 
 
-//========================================
-//                JsonWebToken
-//========================================
-process.env.TOKEN_EXPIRATION_TIME = '30d'; // Expires in 30 days
+// ================================================
+//                  JsonWebToken
+// ================================================
+process.env.TOKEN_EXPIRATION_TIME = '30d';                          // Expires in 30 days
 process.env.SECRET = process.env.SECRET || "EurekaLabsChallenge";
 
 
-//========================================
-//    User Data (for testing pourpuse)
-//========================================
+// ================================================
+//        User Data (for testing purpose)
+// ================================================
 let user = {
     id: "007",
     name: "Gustavo",

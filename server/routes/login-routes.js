@@ -4,14 +4,15 @@ const { users } = require('../config/config');
 const app = express();
 const _ = require('underscore');
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/user-model');
-
-
 const bodyParser = require('body-parser');
+
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 
 
+// ================================================
+//                      Login
+// ================================================
 
 app.post('/login', (req, res) => {
     let body = req.body;
@@ -31,7 +32,6 @@ app.post('/login', (req, res) => {
             message: `No existe un usuario con el email ${body.email} registrado`
         });
     } else {
-        console.log(body.password, user.password);
         if( !bcrypt.compareSync(body.password, user.password )){
             return res.status(400).json({
                 ok: false,

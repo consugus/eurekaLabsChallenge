@@ -11,9 +11,11 @@ app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-
 // app.use(bodyParser.json()); // parse application/json
 
 
-// =======================================
-//       Devolver todos los usuarios
-// =======================================
+
+// ================================================
+//         Devolver todos los usuarios
+// ================================================
+
 app.get( '/usuario', tokenVerify, (req, res) => {
 
     let tmp = [];
@@ -33,9 +35,9 @@ app.get( '/usuario', tokenVerify, (req, res) => {
 });
 
 
-// =======================================
-//    Devolver un usuario, dado un ID
-// =======================================
+// ================================================
+//        Devolver un usuario, dado un ID
+// ================================================
 app.get('/usuario/:id', tokenVerify, (req, res) => {
 
     let id = req.params.id;
@@ -61,9 +63,9 @@ app.get('/usuario/:id', tokenVerify, (req, res) => {
 });
 
 
-// =======================================
-//       Agregar un usuario a la BD
-// =======================================
+// ================================================
+//     Agregar un usuario al array de Users
+// ================================================
 app.post( '/usuario', tokenVerify, (req, res) => {
     let body = req.body;
     let passwordHashed = bcrypt.hashSync(body.password, 10);
@@ -108,9 +110,9 @@ app.post( '/usuario', tokenVerify, (req, res) => {
 });
 
 
-// =======================================
-// Actualizar la información de un Usuario
-// =======================================
+// ================================================
+//    Actualizar la información de un Usuario
+// ================================================
 app.put( '/usuario/:id', tokenVerify, (req, res) => {
     let body = req.body;
     let id = req.params.id;
@@ -154,9 +156,9 @@ app.put( '/usuario/:id', tokenVerify, (req, res) => {
 });
 
 
-// =======================================
-//    Eliminado de un usuario
-// =======================================
+// ================================================
+//           Eliminado de un usuario
+// ================================================
 app.delete( '/usuario/:id', tokenVerify, (req, res) => {
 
     let id = req.params.id;
