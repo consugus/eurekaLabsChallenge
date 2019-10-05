@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "USERS: gest users from non persistent array",
+			"name": "USERS: gets users from non persistent array",
 			"request": {
 				"method": "GET",
 				"header": [
