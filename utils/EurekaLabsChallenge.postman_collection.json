@@ -193,56 +193,6 @@
 			"response": []
 		},
 		{
-			"name": "STOCKS: get stock values from Alpha Avantage",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"type": "text"
-					},
-					{
-						"key": "token",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "company",
-							"value": "FB",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{url2}}/cotization/?",
-					"host": [
-						"{{url2}}"
-					],
-					"path": [
-						"cotization",
-						""
-					],
-					"query": [
-						{
-							"key": "company",
-							"value": "FB",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "LOGIN: validates user in app",
 			"event": [
 				{
@@ -296,6 +246,54 @@
 					],
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STOCKS: get stock values from Alpha Avantage",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "company",
+							"value": "FB",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url2}}/cotization?company=bf",
+					"host": [
+						"{{url2}}"
+					],
+					"path": [
+						"cotization"
+					],
+					"query": [
+						{
+							"key": "company",
+							"value": "bf"
+						}
 					]
 				}
 			},

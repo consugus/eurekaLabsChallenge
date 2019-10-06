@@ -12,7 +12,7 @@ app.use(bodyParser.json()); // parse application/json
 //    GET cotization from Alpha Vantage's API
 // ================================================
 
-app.get( '/cotization', tokenVerify,  (req, res) => {
+app.get( '/cot', tokenVerify,  (req, res) => {
 
     const url = "https://www.alphavantage.co/query?";
     let myFn = "TIME_SERIES_DAILY";
@@ -48,7 +48,7 @@ app.get( '/cotization', tokenVerify,  (req, res) => {
             // be compared against Friday?
 
             let today = new Date();
-            if(today.getDay() === 6 || today.getDay() === 7){ // In case data is trying to be retrieved Saturday or Sunday
+            if(today.getDay() === 6 || today.getDay() === 0){ // In case data is trying to be retrieved Saturday or Sunday
                 output =  {
                     ok: false,
                     message: "No se encontraron datos disponibles"
