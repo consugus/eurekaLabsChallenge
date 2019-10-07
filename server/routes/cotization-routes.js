@@ -1,7 +1,6 @@
 const axios = require('axios');
 const express = require('express');
 const app = express();
-const colors = require('colors');
 const { tokenVerify } = require('../middlewares/authentication');
 
 const bodyParser = require('body-parser');
@@ -26,16 +25,10 @@ app.get('/cotization', tokenVerify, (req, res) => {
             message: `El símbolo ${sym} no es válido`
         });
     } else {
-        let lastValue;
-        let previousValue;
-        let dif;
-        let output;
-        // let salida;
-
+        let lastValue, previousValue, dif, output;
 
         axios.get(query)
         .then(function (response) {
-          // handle success
 
             let data = response.data;
             let serieName = Object.keys(data);
@@ -50,20 +43,17 @@ app.get('/cotization', tokenVerify, (req, res) => {
             lastValue = Number(lastDataValues['4. close']).toFixed(2);
             let previousDataValues = series[previousDataName]; // console.log(previousDataValues);
             previousValue = Number(previousDataValues['4. close']).toFixed(2);
-            dif =  lastValue - previousValue;
-            // dif =  previousValue -lastValue;
+            dif =  lastValue - previousValue; // dif =  previousValue - lastValue;
 
             let salida = {
                 "symbol": sym,
-                "value": lastValue,
-                "previous": previousValue,
+                "value": `${lastValue} (${lastDataName})`,
+                "previous": `${previousValue} (${previousDataName})`,
                 "change_percent": ( (dif)/previousValue*100 ).toFixed(2),
                 "change_value": (dif).toFixed(2),
                 "color_code": ( (dif) >= 0 ? "green" : "red" ),
             };
-            console.log(salida);
-
-
+            console.log("Salida: \n", salida);
 
             output = {
                 ok: true,
@@ -73,8 +63,13 @@ app.get('/cotization', tokenVerify, (req, res) => {
             res.status(200).send(output);
         })
         .catch(function (error) {
-          // handle error
-          console.log(error);
+
+          output = {
+              ok: false,
+              message: "Ocurrió un error al recuperar los datos: ", error
+          };
+
+          res.status(400).send(output);
         });
     }
 });
