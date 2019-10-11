@@ -5,9 +5,6 @@ const app = express();
 const _ = require('underscore');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user-model');
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 
 
 // ================================================

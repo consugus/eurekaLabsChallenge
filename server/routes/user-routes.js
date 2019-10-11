@@ -6,10 +6,6 @@ const User = require('../models/user-model');
 const _ = require('underscore');
 const { tokenVerify } = require('../middlewares/authentication');
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
-// app.use(bodyParser.json()); // parse application/json
-
 
 
 // ================================================
