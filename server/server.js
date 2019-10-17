@@ -5,6 +5,7 @@ const fs = require('fs');
 const morgan = require('morgan');
 const path = require('path');
 var rfs = require('rotating-file-stream');
+const bodyParser = require('body-parser');
 const app = express();
 
 let logDirectory = path.join(__dirname, 'log');
@@ -15,6 +16,10 @@ let accessLogStream = rfs( 'invest-api.log', { interval: '1d', path: logDirector
 
 // Setup a logger
 app.use( morgan('combined', {stream: accessLogStream}) );
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 // ================================================
 //                    Routes
