@@ -37,25 +37,24 @@ app.get( '/usuario', tokenVerify, (req, res) => {
 app.get('/usuario/:id', tokenVerify, (req, res) => {
 
     let id = req.params.id;
-
     let user = new User();
+
     for (let i = 0 ; i < users.length ; i++){
         if( users[i].id === id ){
             user = _.pick(users[i], "id", "name", "email");
-
             res.json({
                 message: "get usuarios by id",
                 user
             });
-
-        } else {
-            res.json({
-                message: "get usuarios by id",
-                error: "No se ingresó un id válido"
-            });
         }
     }
 
+    if(!user.email){
+        res.json({
+            message: "get usuarios by id",
+            error: "No se ingresó un id válido"
+        });
+    }
 });
 
 
