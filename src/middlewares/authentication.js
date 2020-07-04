@@ -4,12 +4,12 @@ const jwt = require('jsonwebtoken');
 //              Token Velification
 // ================================================
 
-let tokenVerify = (req, res, next) =>{
-    let token = req.get('token');
+let tokenVerify = ( req, res, next ) =>{
+    let token = req.get( 'token' );
 
-    jwt.verify( token, process.env.SECRET, (err, decoded) => {
-        if( err){
-            return res.status(401).json({
+    jwt.verify( token, process.env.SECRET, ( err, decoded ) => {
+        if( err ){
+            return res.status( 401 ).json({
                 ok: false,
                 err
             });
@@ -23,6 +23,4 @@ let tokenVerify = (req, res, next) =>{
 
 
 
-module.exports = {
-    tokenVerify
-}
+module.exports = { tokenVerify }

@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require( 'bcrypt' );
 
 // ================================================
 //                    Port
@@ -10,7 +10,7 @@ process.env.PORT = process.env.PORT || 3000;
 //                  JsonWebToken
 // ================================================
 process.env.TOKEN_EXPIRATION_TIME = '30d';                          // Expires in 30 days
-process.env.SECRET = process.env.SECRET || "EurekaLabsChallenge";
+process.env.SECRET = process.env.SECRET || "GlobantChallenge";
 
 
 // ================================================
@@ -23,7 +23,7 @@ let user = {
     password: bcrypt.hashSync( "123456", 10 )
 };
 let users = [];
-users.push(user);
+users.push( user );
 
 
 module.exports = { users };

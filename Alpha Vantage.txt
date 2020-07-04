@@ -1,9 +1,0 @@
-https://www.alphavantage.co/
-
-
-Access key is: 2UWJHXTSHOIQRGV2
-
-Ejemplo de la request que tengo que mandar:
-https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&outputsize=compact&apikey=2UWJHXTSHOIQRGV2
-
-En symbol va el código de la empresa cuya acción se quiere consultar:
